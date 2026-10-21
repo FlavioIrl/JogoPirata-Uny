@@ -4,8 +4,8 @@ public class Player : MonoBehaviour
 {
     private Rigidbody2D corpo;
     private SpriteRenderer sprite;
-    public float velocidade = 3.0f;
-
+    public float velocidade = 1.35f;
+    private bool olhandoEsquerda = false; 
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -21,16 +21,22 @@ public class Player : MonoBehaviour
         float horizontal = Input.GetAxis("Horizontal");
 
         corpo.linearVelocity = new Vector2(horizontal * velocidade, corpo.linearVelocity.y);
+        flip(horizontal);
     }
 
     private void flip(float horizontal)
     {
-        if (horizontal >= 0 )
+
+         
+        if (horizontal < 0 && !olhandoEsquerda)
         {
-            sprite.flipX = false;
+            olhandoEsquerda = true;
+            sprite.flipX = true;
         }
+        else if (horizontal > 0 && olhandoEsquerda)
         {
-            
+            olhandoEsquerda = false;
+            sprite.flipX = false;
         }
     }
 }
